@@ -82,7 +82,7 @@ public class HttpConnectionUtil {
         long start = System.currentTimeMillis();
         String body = request.execute().body();
         long end = System.currentTimeMillis();
-        log.info("耗时： "+ (end - start) / 1000+"毫秒" );
+        log.info("耗时： "+ (end - start) +"毫秒" );
         log.info("请求结果： "+ body );
         return body;
     }
