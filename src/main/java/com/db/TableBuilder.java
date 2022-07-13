@@ -2,11 +2,21 @@ package com.db;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.db.Db;
+import cn.hutool.db.Entity;
+import cn.hutool.db.ds.DSFactory;
+import cn.hutool.setting.Setting;
 
 import javax.persistence.Table;
+import javax.sql.DataSource;
 import java.io.File;
 import java.lang.reflect.Field;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 
 
@@ -309,7 +319,7 @@ public class TableBuilder {
      * @author yuanmengfan
      * @date 2022/7/12 21:59
      */
-    private String getTableName(Class<?> model) {
+    public static String getTableName(Class<?> model) {
         String tableName = "";
         // 当model 有 Table 这个注解时 且 Table注解的name值不是空时 直接取tableName为 生成表名
         // 否则 类名 当表名
@@ -321,8 +331,40 @@ public class TableBuilder {
         return tableName;
     }
 
-    public static void main(String[] args) {
-        System.out.println(new File("").getAbsolutePath());
+    /**
+     * //TODO 根据Model类获取生成的表名
+     *
+     * @return java.lang.String
+     * @title getTableName
+     * @author yuanmengfan
+     * @date 2022/7/12 21:59
+     */
+    public static String getFieldName(Field field) {
+        String fieldName  = field.getName();
+        TableExtension extension = field.getAnnotation(TableExtension.class);
+        if (extension != null) {
+            fieldName = (StrUtil.isNotBlank(extension.columnName()) ? extension.columnName() : fieldName);
+        }
+        return fieldName;
+    }
+
+    public static void main(String[] args) throws SQLException {
+        String db_setting = "db/db.setting";
+        Setting setting = new Setting(db_setting, CharsetUtil.CHARSET_UTF_8,true);
+        DataSource group_test = DSFactory.create(setting).getDataSource("group_test");
+        SqlUtils sqlUtils = new SqlUtils();
+
+        TestModel testModel = new TestModel();
+        testModel.setAge(1);
+        testModel.setId(UUID.randomUUID().toString());
+        testModel.setBirth(new Date());
+        testModel.setSalary(123124124123D);
+        testModel.setDisabled(false);
+        testModel.setLocalDate(LocalDate.now());
+        testModel.setLocalDateTime(LocalDateTime.now());
+        testModel.setLocalTime(LocalTime.now());
+        Entity entity = sqlUtils.CreateInsert(testModel);
+        Db.use(group_test).insert(entity);
         System.out.println(new TableBuilder().createTableSql(TestModel.class, DbType.MySQL));
     }
 }

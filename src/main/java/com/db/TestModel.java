@@ -5,6 +5,9 @@ import lombok.Setter;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.Table;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 
 /**
@@ -30,4 +33,10 @@ public class TestModel {
     private Date birth;
     @TableExtension(defaultValue=DefaultValues.TRUE,remark = "是否禁用")
     private boolean disabled;
+
+    private LocalDate localDate;
+
+    private LocalDateTime localDateTime;
+
+    private LocalTime localTime;
 }

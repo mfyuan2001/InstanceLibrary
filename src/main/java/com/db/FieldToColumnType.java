@@ -36,8 +36,11 @@ public enum FieldToColumnType {
     MYSQL_CHAR_PACKING_COLUMN_TYPE("com.lang.Character", "VARCHAR", "255", DbType.MySQL),
     MYSQL_BYTEARRAY_COLUMN_TYPE("byte[]", "blob", "", DbType.MySQL),
     MYSQL_DATE_COLUMN_TYPE("java.util.Date", "datetime", "", DbType.MySQL),
-    MYSQL_SQL_DATE_COLUMN_TYPE("java.sql.Date", "data", "", DbType.MySQL),
+    MYSQL_SQL_DATE_COLUMN_TYPE("java.sql.Date", "date", "", DbType.MySQL),
     MYSQL_TIMESTAMP_COLUMN_TYPE("java.sql.TIMESTAMP", "timestamp", "", DbType.MySQL),
+    MYSQL_LOCALDATE_COLUMN_TYPE("java.time.LocalDate", "date", "", DbType.MySQL),
+    MYSQL_LOCALDATETIME_COLUMN_TYPE("java.time.LocalDateTime", "datetime", "", DbType.MySQL),
+    MYSQL_LOCALTIME_COLUMN_TYPE("java.time.LocalTime", "time", "", DbType.MySQL),
     DEFAULT_MYSQL_UNKNOWN_TYPE("String", "VARCHAR", "255", DbType.MySQL),
 
     // Oracle类型
