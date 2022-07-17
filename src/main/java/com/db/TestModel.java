@@ -5,10 +5,12 @@ import lombok.Setter;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.Table;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author yuanmengfan
@@ -39,4 +41,7 @@ public class TestModel {
     private LocalDateTime localDateTime;
 
     private LocalTime localTime;
+
+    private List<Date> list;
+
 }
